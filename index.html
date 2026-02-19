@@ -1,0 +1,546 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drouge | Premium Cosmetic E-Commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);
+        }
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #d946ef;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7)), url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .testimonial-slider {
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+        .testimonial-slider::-webkit-scrollbar {
+            display: none;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #d946ef 0%, #a855f7 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(216, 70, 239, 0.3);
+        }
+        .footer-gradient {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        }
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#" class="text-2xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-spa text-pink-500 mr-2"></i>
+                    DROUGE
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link text-gray-700 hover:text-pink-600 font-medium">Home</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-pink-600 font-medium">Shop</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-pink-600 font-medium">About</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-pink-600 font-medium">Services</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-pink-600 font-medium">Gallery</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-pink-600 font-medium">Contact</a>
+                </nav>
+
+                <!-- Icons -->
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="text-gray-700 hover:text-pink-600">
+                        <i class="fas fa-search text-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-pink-600">
+                        <i class="fas fa-shopping-bag text-lg"></i>
+                        <span class="absolute -mt-2 -mr-2 bg-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-pink-600">
+                        <i class="fas fa-user text-lg"></i>
+                    </a>
+                    <button id="menuToggle" class="md:hidden text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white shadow-xl p-6 md:hidden">
+            <div class="flex justify-between items-center mb-8">
+                <span class="text-xl font-bold text-gray-800">Menu</span>
+                <button id="closeMenu" class="text-gray-600">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-6">
+                <a href="#" class="text-gray-700 hover:text-pink-600 font-medium text-lg">Home</a>
+                <a href="#" class="text-gray-700 hover:text-pink-600 font-medium text-lg">Shop</a>
+                <a href="#" class="text-gray-700 hover:text-pink-600 font-medium text-lg">About</a>
+                <a href="#" class="text-gray-700 hover:text-pink-600 font-medium text-lg">Services</a>
+                <a href="#" class="text-gray-700 hover:text-pink-600 font-medium text-lg">Gallery</a>
+                <a href="#" class="text-gray-700 hover:text-pink-600 font-medium text-lg">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section gradient-bg py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0 animate-fadeInUp">
+                    <span class="inline-block px-4 py-2 bg-pink-100 text-pink-700 rounded-full font-medium mb-4">Premium Skincare</span>
+                    <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-6">Radiant Beauty Starts Here</h1>
+                    <p class="text-gray-600 text-lg mb-8 max-w-xl">Discover our carefully crafted cosmetic products designed to enhance your natural beauty with premium ingredients and sustainable practices.</p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#" class="btn-primary text-white font-semibold py-3 px-8 rounded-full inline-flex items-center justify-center">
+                            Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#" class="border-2 border-pink-500 text-pink-600 font-semibold py-3 px-8 rounded-full inline-flex items-center justify-center hover:bg-pink-50 transition">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center animate-fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="relative">
+                        <div class="w-80 h-80 md:w-96 md:h-96 rounded-full bg-gradient-to-br from-pink-200 to-purple-300 flex items-center justify-center overflow-hidden shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Premium Cosmetic Products" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 bg-white p-6 rounded-2xl shadow-xl max-w-xs">
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ml-2 text-gray-600">4.8/5</span>
+                            </div>
+                            <p class="font-medium">"This serum transformed my skin completely!"</p>
+                            <p class="text-sm text-gray-500 mt-1">- Sarah M.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Featured Products</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our best-selling products loved by thousands of customers worldwide.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="relative overflow-hidden rounded-xl mb-4 h-64">
+                        <img src="https://images.unsplash.com/photo-1556228578-9c360e1d8d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Hydrating Serum" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full">BESTSELLER</div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Hydrating Serum</h3>
+                    <p class="text-gray-600 text-sm mb-4">Deep hydration with hyaluronic acid for plump, glowing skin.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-pink-600">$42.99</span>
+                        <button class="bg-pink-100 text-pink-700 hover:bg-pink-200 font-medium py-2 px-5 rounded-full transition">
+                            <i class="fas fa-shopping-bag mr-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="relative overflow-hidden rounded-xl mb-4 h-64">
+                        <img src="https://images.unsplash.com/photo-1591085686350-798c0f9faa7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vitamin C Cream" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Vitamin C Cream</h3>
+                    <p class="text-gray-600 text-sm mb-4">Brightens skin tone and reduces dark spots with antioxidants.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-pink-600">$38.50</span>
+                        <button class="bg-pink-100 text-pink-700 hover:bg-pink-200 font-medium py-2 px-5 rounded-full transition">
+                            <i class="fas fa-shopping-bag mr-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="relative overflow-hidden rounded-xl mb-4 h-64">
+                        <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cleansing Oil" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">NEW</div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Cleansing Oil</h3>
+                    <p class="text-gray-600 text-sm mb-4">Gentle yet effective makeup removal without stripping natural oils.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-pink-600">$28.99</span>
+                        <button class="bg-pink-100 text-pink-700 hover:bg-pink-200 font-medium py-2 px-5 rounded-full transition">
+                            <i class="fas fa-shopping-bag mr-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="relative overflow-hidden rounded-xl mb-4 h-64">
+                        <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Night Repair" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Night Repair</h3>
+                    <p class="text-gray-600 text-sm mb-4">Overnight treatment to rejuvenate and repair skin while you sleep.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-pink-600">$55.00</span>
+                        <button class="bg-pink-100 text-pink-700 hover:bg-pink-200 font-medium py-2 px-5 rounded-full transition">
+                            <i class="fas fa-shopping-bag mr-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center text-pink-600 font-semibold text-lg hover:text-pink-700">
+                    View All Products <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-16 gradient-bg">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Why Choose Drouge?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">We combine premium quality with ethical practices for beauty that cares.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-leaf text-3xl text-pink-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Natural Ingredients</h3>
+                    <p class="text-gray-600">All our products are formulated with 95%+ natural, sustainably sourced ingredients.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-vial text-3xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Dermatologist Tested</h3>
+                    <p class="text-gray-600">Every product is rigorously tested and approved by skincare experts.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-recycle text-3xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Eco-Friendly Packaging</h3>
+                    <p class="text-gray-600">We use 100% recyclable materials and minimize plastic in our packaging.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What Our Customers Say</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Join thousands of satisfied customers who have transformed their skincare routine.</p>
+            </div>
+
+            <div class="testimonial-slider flex overflow-x-auto pb-8 space-x-6" id="testimonialSlider">
+                <!-- Testimonial 1 -->
+                <div class="min-w-full md:min-w-0 md:w-1/3 bg-gray-50 p-8 rounded-2xl border border-gray-200">
+                    <div class="flex items-center mb-6">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Alexandra Chen" class="w-12 h-12 rounded-full object-cover">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-800">Alexandra Chen</h4>
+                            <p class="text-gray-500 text-sm">Verified Buyer</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic">"The hydrating serum is a game-changer! My skin has never felt so plump and hydrated. I've tried countless brands, but Drouge delivers real results."</p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="min-w-full md:min-w-0 md:w-1/3 bg-gray-50 p-8 rounded-2xl border border-gray-200">
+                    <div class="flex items-center mb-6">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Marcus Rivera" class="w-12 h-12 rounded-full object-cover">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-800">Marcus Rivera</h4>
+                            <p class="text-gray-500 text-sm">Skincare Blogger</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-700 italic">"As someone with sensitive skin, finding products that work is tough. Drouge's gentle formulations don't irritate and actually improve my skin texture."</p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="min-w-full md:min-w-0 md:w-1/3 bg-gray-50 p-8 rounded-2xl border border-gray-200">
+                    <div class="flex items-center mb-6">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Sophie Williams" class="w-12 h-12 rounded-full object-cover">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-800">Sophie Williams</h4>
+                            <p class="text-gray-500 text-sm">Makeup Artist</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic">"I recommend Drouge to all my clients. The Vitamin C Cream gives that perfect glow under makeup. Professional quality without the luxury price tag."</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-8 space-x-2">
+                <button class="w-3 h-3 rounded-full bg-pink-300" onclick="scrollTestimonials(0)"></button>
+                <button class="w-3 h-3 rounded-full bg-gray-300" onclick="scrollTestimonials(1)"></button>
+                <button class="w-3 h-3 rounded-full bg-gray-300" onclick="scrollTestimonials(2)"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-pink-50 to-purple-50">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-6">Ready for Radiant Skin?</h2>
+            <p class="text-gray-600 text-xl mb-10 max-w-2xl mx-auto">Join our community and get 15% off your first order plus exclusive skincare tips.</p>
+            
+            <form class="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4">
+                <input type="email" placeholder="Enter your email address" class="flex-grow py-4 px-6 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <button type="submit" class="btn-primary text-white font-semibold py-4 px-8 rounded-full">
+                    Subscribe Now <i class="fas fa-paper-plane ml-2"></i>
+                </button>
+            </form>
+            
+            <p class="text-gray-500 text-sm mt-6">By subscribing, you agree to our Privacy Policy and consent to receive updates.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <a href="#" class="text-2xl font-bold text-white flex items-center mb-6">
+                        <i class="fas fa-spa text-pink-400 mr-2"></i>
+                        DROUGE
+                    </a>
+                    <p class="text-gray-300 mb-6">Premium cosmetic products crafted with care for your natural beauty journey.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">Home</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">Shop All</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">Best Sellers</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">New Arrivals</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">Skincare Guide</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">FAQs</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">Shipping & Returns</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-300 transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Contact Info</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-pink-400 mt-1 mr-3"></i>
+                            <span class="text-gray-300">123 Beauty Street, Los Angeles, CA 90210</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-pink-400 mr-3"></i>
+                            <span class="text-gray-300">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-pink-400 mr-3"></i>
+                            <span class="text-gray-300">hello@drouge.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2026 Drouge Cosmetic E-Commerce. All rights reserved. | Designed as a Template Kit Demonstration</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Testimonial slider functionality
+        function scrollTestimonials(index) {
+            const slider = document.getElementById('testimonialSlider');
+            const cardWidth = slider.children[0].offsetWidth + 24; // width + gap
+            slider.scrollTo({
+                left: index * cardWidth,
+                behavior: 'smooth'
+            });
+            
+            // Update indicators
+            const indicators = document.querySelectorAll('#testimonialSlider + div button');
+            indicators.forEach((indicator, i) => {
+                if (i === index) {
+                    indicator.className = 'w-3 h-3 rounded-full bg-pink-300';
+                } else {
+                    indicator.className = 'w-3 h-3 rounded-full bg-gray-300';
+                }
+            });
+        }
+
+        // Add to cart animation
+        document.querySelectorAll('.product-card button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check mr-2"></i> Added!';
+                this.classList.remove('bg-pink-100', 'text-pink-700', 'hover:bg-pink-200');
+                this.classList.add('bg-green-100', 'text-green-700');
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.classList.remove('bg-green-100', 'text-green-700');
+                    this.classList.add('bg-pink-100', 'text-pink-700', 'hover:bg-pink-200');
+                }, 2000);
+            });
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input[type="email"]');
+            if (emailInput.value) {
+                emailInput.value = '';
+                alert('Thank you for subscribing! Check your email for the discount code.');
+            }
+        });
+    </script>
+</body>
+</html>
